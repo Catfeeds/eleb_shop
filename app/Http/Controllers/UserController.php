@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Shops;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -37,11 +38,15 @@ class UserController extends Controller
             'bao'=>$request->has('bao') ?? 0,
             'status'=>'0'
         ];
-
-        User::create($user_data);
-        Shops::create($shops_data);
+        //如果事务闭包中抛出异常，事务将会自动回滚；如果闭包执行成功，事务将会自动提交：该闭包函数中只能用DB::门面
+        //use 括号 来继承上下文
+        DB::transaction(function () use ($shops_data,$user_data){
+            $shops = Shops::create($shops_data);
+            $user_data['shop_id'] = $shops->id;
+            User::create($user_data);
+        });
         //跳转
-        //return redirect()->route('login')->with('success','恭喜您！注册成功');
+        return redirect()->route('login')->with('success','恭喜您！注册成功');
     }
 
 }

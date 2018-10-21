@@ -14,5 +14,19 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+//user route
 Route::resource('users','UserController');
+
+//session route
+Route::get('session/login','SessionController@login')->name('login');
+Route::post('session/verify','SessionController@verify')->name('session.verify');
+Route::get('session/logout','SessionController@logout')->name('session.logout');
+Route::get('session/eidt','SessionController@edit')->name('session.edit');
+Route::post('session/store','SessionController@store')->name('session.store');
+
+
+//menuCategory route
+Route::resource('menucategories','MenuCategoryController');
+
+//menu route
+Route::resource('menus','MenuController');

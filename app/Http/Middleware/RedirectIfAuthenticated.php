@@ -16,11 +16,12 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-    {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
-        }
-
-        return $next($request);
+{
+    if (Auth::guard($guard)->check()) {
+        //登录成功后跳转 商家菜品分类
+        return redirect()->route('menus.index');
     }
+
+    return $next($request);
+}
 }

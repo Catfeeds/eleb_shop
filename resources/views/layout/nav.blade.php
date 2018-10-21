@@ -37,16 +37,16 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 @guest
-                <li><a href="">登录</a></li>
+                <li><a href="{{ route('login') }}">登录</a></li>
                 @endguest
                 @auth
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">个人中心</a></li>
-                        <li><a href="#">修改密码</a></li>
+                        <li><a href="{{ route('session.edit',['id'=>auth()->user()->id]) }}">修改密码</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="">安全推出</a></li>
+                        <li><a href="{{ route('session.logout') }}">安全推出</a></li>
                     </ul>
                 </li>
                     @endauth

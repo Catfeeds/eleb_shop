@@ -33,32 +33,32 @@
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="brand"> 是否品牌
+                <input type="checkbox" name="brand" value="1"> 是否品牌
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="on_time"> 是否准时达
+                <input type="checkbox" name="on_time" value="1"> 是否准时达
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="fengniao"> 是否支持蜂鸟配送
+                <input type="checkbox" name="fengniao" value="1"> 是否支持蜂鸟配送
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="piao"> 是否票标记
+                <input type="checkbox" name="piao" value="1"> 是否票标记
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="zhun"> 是否准标记
+                <input type="checkbox" name="zhun" value="1"> 是否准标记
             </label>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="bao"> 是否保标记
+                <input type="checkbox" name="bao" value="1"> 是否保标记
             </label>
         </div>
         <input id="captcha" class="form-control" name="captcha" >
