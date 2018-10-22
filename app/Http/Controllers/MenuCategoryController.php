@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class MenuCategoryController extends Controller
 {
+    //中间件验证用户是否登录，登录才可以操作这些方法
     public function __construct()
     {
         $this->middleware('auth',[
@@ -28,8 +29,22 @@ class MenuCategoryController extends Controller
 
     public function store(Request $request)
     {
+
         //验证数据
-        MenuCategory::create($request->input());
+        $this->validate($request,[
+            'name'=>'required',
+            'type_accumulation'=>'required',
+            'description'=>'required',
+            'is_selected'=>'required',
+        ]);
+        $data = [
+            'name'=>$request->name,
+            'type_accumulation'=>$request->type_accumulation,
+            'description'=>$request->description,
+            'is_selected'=>$request->is_selected,
+            'shop_id'=>auth()->user()->shop_id,
+        ];
+        MenuCategory::create($data);
         return redirect()->route('menucategories.index')->with('success','添加菜品分类成功');
     }
 
@@ -40,16 +55,30 @@ class MenuCategoryController extends Controller
 
     public function update(Request $request,MenuCategory $menucategory)
     {
-        $menucategory->update($request->input());
+        $this->validate($request,[
+            'name'=>'required',
+            'type_accumulation'=>'required',
+            'description'=>'required',
+            'is_selected'=>'required',
+        ]);
+        $data = [
+            'name'=>$request->name,
+            'type_accumulation'=>$request->type_accumulation,
+            'description'=>$request->description,
+            'is_selected'=>$request->is_selected,
+            'shop_id'=>auth()->user()->shop_id,
+        ];
+        $menucategory->update($data);
         return redirect()->route('menucategories.index')->with('success','修改菜品分类成功');
     }
 
+
     public function destroy(Request $request,MenuCategory $menucategory)
     {
-        if(Shops::find($menucategory->shop_id) != 'null' || Menu::where('category_id',$menucategory->id)->first() != 'null'){
-            return 1;
+        //只能删除空菜品分类 该菜品分类不属于某个商家，不属于某个菜品，才可以删除
+        if(Shops::find($menucategory->shop_id) != null || Menu::where('category_id',$menucategory->id)->first() != null){
+            return redirect()->route('menucategories.index')->with('danger','只能删除空菜品分类!');
         }
-        return 2;
         $menucategory->delete();
         return redirect()->route('menucategories.index')->with('success','删除菜品分类成功');
     }

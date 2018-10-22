@@ -17,10 +17,6 @@
             <label for="">是否是默认分类</label>
             <input type="text" name="is_selected" class="form-control" value="{{ $menucategory->is_selected }}" >
         </div>
-        <div class="form-group">
-            <label for="">所属商家ID</label>
-            <input type="text" name="shop_id" class="form-control" value="{{ $menucategory->shop_id }}" >
-        </div>
         {{ csrf_field() }}
         {{ method_field('PUT') }}
         <button class="btn btn-info">确认修改</button>

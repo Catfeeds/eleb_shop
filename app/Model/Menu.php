@@ -21,4 +21,9 @@ class Menu extends Model
       'goods_img',
       'status',
     ];
+
+    public function menuCate()
+    {
+        return $this->belongsTo(MenuCategory::class,'category_id','id');
+    }
 }

@@ -16,7 +16,11 @@
         </div>
         <div class="form-group">
             <label for="">所属分类ID</label>
-            <input type="text" name="category_id" class="form-control" value="{{ $menu->category_id }}">
+            <select name="category_id" id="" class="form-control">
+                @foreach($cate as $v)
+                    <option @if($menu->categoryid == $v->id) selected="selected" @endif>{{ $v->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="">菜品价格</label>

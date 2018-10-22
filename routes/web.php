@@ -30,3 +30,4 @@ Route::resource('menucategories','MenuCategoryController');
 
 //menu route
 Route::resource('menus','MenuController');
+Route::get('search','MenuController@search')->name('search');

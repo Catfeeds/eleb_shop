@@ -1,51 +1,70 @@
 @extends('layout.default')
 @section('contents')
     @include('layout._notice')
+    <form class="navbar-form navbar-left form-box" action="{{ route('menus.index') }}" style="display: block" method="post">
+        <input type="hidden" name="cateid" value="@if($categoryid) {{ $categoryid }} @else 0 @endif">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" name="keywords" >
+        </div>
+        <label for="">价格区间</label>
+        <div class="form-group">
+            <label for="">开始</label>
+            <input type="text" name="start" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="">结束</label>
+            <input type="text" name="end" class="form-control">
+        </div>
+        {{ method_field('GET') }}
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <ul class="list-unstyled" style="display: block">
+        @foreach($cateall as $cate)
+            <li><a href="{{ route('menus.index',['cateid'=>$cate->id]) }}">{{ $cate->name}}</a></li>
+        @endforeach
+    </ul>
     <table class="table table-bordered">
         <tr>
-            <td>编号</td>
             <td>菜品名称</td>
-            <td>菜品评分</td>
-            <td>所属商家</td>
-            <td>所属分类ID</td>
             <td>菜品价格</td>
-            <td>菜品描述</td>
-            <td>菜品月销量</td>
-            <td>菜品评分数量</td>
-            <td>提示信息</td>
-            <td>菜品满意度数量</td>
-            <td>满意度评分</td>
-            <td>菜品图片</td>
             <td>菜品状态</td>
             <td>操作</td>
         </tr>
-        @foreach($menus as $menu)
+        @foreach($data as $v)
             <tr>
-                <td>{{ $menu->id }}</td>
-                <td>{{ $menu->goods_name }}</td>
-                <td>{{ $menu->rating }}</td>
-                <td>{{ $menu->shop_id }}</td>
-                <td>{{ $menu->category_id }}</td>
-                <td>{{ $menu->goods_price }}</td>
-                <td>{{ $menu->description }}</td>
-                <td>{{ $menu->month_sales }}</td>
-                <td>{{ $menu->rating_count }}</td>
-                <td>{{ $menu->tips }}</td>
-                <td>{{ $menu->satisfy_count }}</td>
-                <td>{{ $menu->satisfy_rate }}</td>
-                <td>{{ $menu->goods_img }}</td>
-                <td>{{ $menu->status }}</td>
+                <td>{{ $v->goods_name }}</td>
+                <td>{{ $v->goods_price }}</td>
+                <td>{{ $v->goods_status }}</td>
                 <td>
-                    <a href="{{ route('menus.edit',[$menu]) }}" class="btn btn-warning">修改</a>
-                    <form action="{{ route('menus.destroy',[$menu]) }}" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <button class="btn btn-danger">删除</button>
-                    </form>
+                    <a href="{{route('menus.edit',[$v])}}" class="btn btn-warning">修改</a>
+                    <a href="javascript:;" data-href="{{ route('menus.destroy',[$v]) }}" class="del_btn btn btn-danger">删除</a>
                 </td>
             </tr>
         @endforeach
     </table>
+    <script src="/js/jQuery.js"></script>
+    <script>
+        $('.del_btn').click(function(){
+            var btn= $(this);
+            var url = btn.data('href');
+            if(confirm('你确定要删除么？删除之后不可恢复！')){
+                $.ajax({
+                    type:"DELETE",
+                    url:url,
+                    data:{
+                        _token:"{{ csrf_token() }}"
+                    },
+                    //成功之后执行的函数
+                    success:function(msg){
+                        if(msg == 'success'){
+                            alert('删除成功');
+                            btn.closest('tr').fadeout();
+                        }else{
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
-
-

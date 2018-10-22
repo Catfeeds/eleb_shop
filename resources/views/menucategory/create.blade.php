@@ -11,16 +11,17 @@
             <input type="text" name="type_accumulation" class="form-control">
         </div>
         <div class="form-group">
-            <label for="">所属商家ID</label>
-            <input type="text" name="shop_id" class="form-control">
-        </div>
-        <div class="form-group">
             <label for="">描述</label>
             <input type="text" name="description" class="form-control">
         </div>
+        <label for="">是否是默认分类</label>
         <div class="form-group">
-            <label for="">是否是默认分类</label>
-            <input type="text" name="is_selected" class="form-control">
+            <label for="">
+                <input type="radio" name="is_selected" value="1">是
+            </label>
+            <label for="">
+                <input type="radio" name="is_selected" value="0">否
+            </label>
         </div>
         {{ csrf_field() }}
         <button class="btn btn-info">添加菜品分类</button>
