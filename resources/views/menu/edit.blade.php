@@ -12,7 +12,7 @@
         </div>
         <div class="form-group">
             <label for="">所属商家</label>
-            <input type="text" name="shop_id" class="form-control" value="{{ $menu->shop_id }}">
+            <input type="text" name="shop_id" class="form-control" value="{{ auth()->user()->name }}">
         </div>
         <div class="form-group">
             <label for="">所属分类ID</label>

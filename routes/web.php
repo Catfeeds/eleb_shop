@@ -31,3 +31,7 @@ Route::resource('menucategories','MenuCategoryController');
 //menu route
 Route::resource('menus','MenuController');
 Route::get('search','MenuController@search')->name('search');
+
+//artivity route
+Route::get('activity','ActivityController@index')->name('activity.index');
+Route::get('activity/view/{activity}','ActivityController@view')->name('activity.view');

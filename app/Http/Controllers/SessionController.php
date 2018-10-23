@@ -35,27 +35,28 @@ class SessionController extends Controller
             'captcha.required'=>'验证码不能为空',
             'captcha.captcha'=>'验证码不正确',
         ]);
-        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password],$request->has('remember')))
-        {
-            if (Auth::user()->status){
-                $shop = Shops::find(Auth::user()->shop_id);
+        $userinfo = User::where('name',$request->name)->first();
+        if($userinfo){
+            if ($userinfo->status){
+                $shop = Shops::find($userinfo->shop_id);
                 if($shop->status == '0'){
-                    Auth::logout();
                     return back()->with('danger','您的店铺状态待审核，请联系管理员')->withInput();
                 }
                 elseif($shop->status == '-1')
                 {
-                    Auth::logout();
                     return back()->with('danger','您的店铺被禁用，请联系管理员')->withInput();
                 }
-                return redirect()->intended(route('menus.index'))->with('success','恭喜您！登录成功');
-            }else{
-                Auth::logout();
-                return back()->with('danger','您的账号未通过审核，请联系管理员')->withInput();
+                if(Auth::attempt(['name'=>$request->name,'password'=>$request->password],$request->has('remember'))){
+                    return redirect()->intended(route('menus.index'))->with('success','恭喜您！登录成功');
+                }else{
+                    return back()->with('danger','账号或密码错误，请重新填写')->withInput();
+                }
 
+            }else{
+                return back()->with('danger','您的账号未通过审核，请联系管理员')->withInput();
             }
         }else{
-            return back()->with('danger','账号或密码错误，请重新填写')->withInput();
+            return back()->with('danger','您输入的用户名不存在，请重新输入')->withInput();
         }
 
     }

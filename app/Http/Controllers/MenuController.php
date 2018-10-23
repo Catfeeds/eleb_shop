@@ -38,40 +38,33 @@ class MenuController extends Controller
                     $data = Menu::where('category_id',$categoryid)
                         ->where('goods_name','like','%'.$keywords.'%')
                         ->whereBetween('goods_price',[$start,$end])
-                        ->select('*')
                         ->get();
                 }elseif ($keywords){
                     $data = Menu::where('category_id',$categoryid)
                         ->where('goods_name','like','%'.$keywords.'%')
-                        ->select('*')
                         ->get();
                 }elseif ($start){
                     $data = Menu::where('category_id',$categoryid)
-                        ->where('goods_price',[$start,$end])
-                        ->select('*')
+                        ->whereBetween('goods_price',[$start,$end])
                         ->get();
-                    var_dump($categoryid,$start,$end);
-                    var_dump($data);exit;
+                    //var_dump($categoryid,$start,$end);
+                    //var_dump($data);exit;
                 }
             }else{
                 $data = Menu::where('category_id',$categoryid)
-                    ->select('*')
                     ->get();
             }
         }else{
             if($keywords || $start){
                 if($keywords && $start){
-                        $data = Menu::where('goods_name',$keywords)
+                        $data = Menu::where('goods_name','like','%'.$keywords.'%')
                             ->whereBetween('goods_price',[$start,$end])
-                            ->select('*')
                             ->get();
                 }elseif ($keywords){
-                        $data = Menu::where('goods_name',$keywords)
-                            ->select('*')
+                        $data = Menu::where('goods_name','like','%'.$keywords.'%')
                             ->get();
                 }elseif ($start){
                         $data = Menu::whereBetween('goods_price',[$start,$end])
-                            ->select('*')
                             ->get();
                 }
 
