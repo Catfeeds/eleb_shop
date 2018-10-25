@@ -35,3 +35,11 @@ Route::get('search','MenuController@search')->name('search');
 //artivity route
 Route::get('activity','ActivityController@index')->name('activity.index');
 Route::get('activity/view/{activity}','ActivityController@view')->name('activity.view');
+
+//upload route
+Route::post('upload','UploaderController@upload')->name('elebshop.upload');
+
+//events route
+Route::get('/events','EventController@index')->name('events.index');
+Route::get('/events/signup/{event}','EventController@signup')->name('events.signup');
+Route::get('/events/view/{event}','EventController@view')->name('events.view');

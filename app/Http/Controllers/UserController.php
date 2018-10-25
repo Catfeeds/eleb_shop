@@ -17,8 +17,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //验证数据
+        $this->validate($request,[
+            'name'=>'required',
+            'password'=>'required',
+            'email'=>'required',
+            'shop_category_id'=>'required',
+            'shop_name'=>'required',
+            'shop_img'=>'required',
+        ]);
         //保存数据
-        $shop_img_path = $request->file('shop_img')->store('public/shops');
+        //$shop_img_path = $request->file('shop_img')->store('public/shops');
         $user_data = [
             'name'=>$request->name,
             'password'=>bcrypt($request->password),
@@ -29,7 +37,7 @@ class UserController extends Controller
         $shops_data = [
             'shop_category_id'=>$request->shop_category_id,
             'shop_name'=>$request->shop_name,
-            'shop_img'=>$shop_img_path,
+            'shop_img'=>$request->img,
             'brand'=>$request->has('brand') ?? 0,
             'on_time'=>$request->has('on_time') ?? 0,
             'fengniao'=>$request->has('fengniao') ?? 0,
