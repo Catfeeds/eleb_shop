@@ -43,3 +43,19 @@ Route::post('upload','UploaderController@upload')->name('elebshop.upload');
 Route::get('/events','EventController@index')->name('events.index');
 Route::get('/events/signup/{event}','EventController@signup')->name('events.signup');
 Route::get('/events/view/{event}','EventController@view')->name('events.view');
+
+//order route
+Route::prefix('order')->group(function (){
+    Route::get('index','OrderController@index')->name('order.index');
+    Route::get('view/{id}','OrderController@view')->name('order.view');
+    Route::get('cancel/{id}','OrderController@cancel')->name('order.cancel');
+    Route::get('send/{id}','OrderController@send')->name('order.send');
+});
+
+//Index route 统计
+/*- 订单量统计[按日统计,按月统计,累计]（每日、每月、总计）
+- 菜品销量统计[按日统计,按月统计,累计]（每日、每月、总计） */
+Route::prefix('index')->group(function (){
+    Route::get('orders','IndexController@orders')->name('index.orders');
+    Route::get('menus','IndexController@menus')->name('index.menus');
+});
