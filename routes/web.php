@@ -58,4 +58,5 @@ Route::prefix('order')->group(function (){
 Route::prefix('index')->group(function (){
     Route::get('orders','IndexController@orders')->name('index.orders');
     Route::get('menus','IndexController@menus')->name('index.menus');
+    Route::get('menus/yue','IndexController@menusYue')->name('index.menusYue');
 });
